@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <base target="_top">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <script>
+        let resultObject;
+
+        function resultadoCnpj(resultado, target) {
+
+          // if (resultado.status!="OK") {
+          //   const erro = "Resultado não encontrado, verifique o CNPJ inserido.";
+          //   status.innerText = erro;
+
+          // } else {
+            
+            resultObject = resultado;
+            const enderecoCompleto = resultado.logradouro + ", nº " + resultado.numero + " - B. " + resultado.bairro + " - CEP: " + resultado.cep + ", na cidade de " +       resultado.municipio + " - " + resultado.uf;
+            resultObject.enderecoCompleto = enderecoCompleto;
+
+            nome.innerText = "Nome: " + resultado.nome;
+            cnpjPrint.innerText = "CNPJ: " + resultado.cnpj;
+            endereco.innerText = "Endereço: " + enderecoCompleto;
+            local.innerText = "Localização: " + resultado.municipio + " - " + resultado.uf;
+
+          // }
+        }
+      </script>
+    </head>
+
+    <body>
+      <div class = "objeto">
+
+        <div class="row">
+          <div class="input-field col s6">
+            <i class="material-icons prefix">account_circle</i>
+            <input id="cnpjTarget" type="text" class="validate" value="17.996.633/0001-02">
+            <label for="cnpjTarget">Consultar CNPJ</label>
+          </div>
+        </div>
+
+        <button class="btn waves-effect blue" id="pesquisar" onclick="google.script.run.withSuccessHandler(resultadoCnpj).withUserObject(this).consultaCNPJ(cnpjTarget.value)" type="submit" name="action">Pesquisar
+          <i class="material-icons right">send</i>
+        </button>
+  
+        <button class="btn waves-effect waves-light" id="incluir" type="submit" name="action" onclick="google.script.run.withUserObject(this).salvarDados(resultObject)">Cadastrar
+          <i class="material-icons right">send</i>
+        </button>
+        
+        <div >
+          <p id="nome">
+            </p>
+          <p id="cnpjPrint">
+            </p>
+          <p id="endereco">
+            </p>
+          <p id="local">
+            </p>
+        </div>
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </body>
+  </html>
